@@ -23,12 +23,12 @@ export const StudentList = () => {
 
  useEffect(()=> {
     studentListHandler();
- })
+ }, [])
 
  return (
    <List subheader={<ListSubheader>Courses</ListSubheader>}>
      {studentList.map((c) => (
-      <StudentItem student={c} />
+      <StudentItem key = {c.id} student={c} />
      ))}
    </List>
  );

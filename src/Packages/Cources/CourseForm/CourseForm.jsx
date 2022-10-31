@@ -36,6 +36,7 @@ export const CourseForm = () => {
     console.log("Data", data);
     navigate("/profile");
   };
+
   const formik = useFormik({
     initialValues: {
       course_name: "",

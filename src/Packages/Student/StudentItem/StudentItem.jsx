@@ -6,6 +6,7 @@ import {
 import React from "react";
 import { useState } from "react";
 import { FiChevronDown, FiChevronUp } from "react-icons/fi";
+import { ToggleButton } from "../../Shared";
 
 export const StudentItem = ({student: t}) => {
   const [showStudent, setShowStudent] = useState(false);
@@ -21,6 +22,7 @@ export const StudentItem = ({student: t}) => {
         </ListItemIcon>
         <ListItemText primary={t.username} secondary={t.email} />
         <ListItemText primary={t.first_name} />
+        <ToggleButton key = {t.id}/>
       </ListItemButton>
     </div>
   );

@@ -49,7 +49,7 @@ const formik = useFormik({
   onSubmit: async (values) => {
     toast.promise(registration(values), {
       loading: "Saving...",
-      success: <b>Registraton Successful!</b>,
+      // success: <b></b>,
       error: (err) => err.message,
     });
   },

@@ -23,6 +23,9 @@ export const Login = () => {
     if (localStorage.getItem("token")) {
       navigate("/profile");
     }
+    else {
+      navigate("/login");
+    }
   }, []);
 
   const loginHandler = async values => {

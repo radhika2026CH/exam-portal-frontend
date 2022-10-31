@@ -1,7 +1,7 @@
-import { Button, TextField } from "@mui/material";
+import { Button, TextField, MenuItem } from "@mui/material";
 import axios from "axios";
 import { useFormik } from "formik";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { Link } from "react-router-dom";
 import * as yup from "yup";
@@ -22,6 +22,7 @@ export const TestForm = () =>{
     const navigate = useNavigate();
     const token = localStorage.getItem("token");
     const AuthorizationHeader = `Bearer ${token}`;
+
     const create_test = async(values) => {
     const data = await axios({
       method: "post",
@@ -32,8 +33,24 @@ export const TestForm = () =>{
       url: "http://localhost:8000/exam/test/create-test/",
       data: values,
     });
+    console.log("values reg test", values);
     navigate("/profile");
     };
+
+    const [courseList, setCourseList] = useState([]);
+    const courseListHandler = async () => {
+      const data = await axios({
+        method: "get",
+        headers: {
+          "Content-Type": "multipart/form-data",
+          Authorization: AuthorizationHeader,
+        },
+        url: "http://localhost:8000/exam/course/course-list-by-creater/student123",
+      });
+      setCourseList(data.data.course_detail_list);
+      console.log("data", data.data.course_detail_list);
+    };
+
     const formik = useFormik({
       initialValues: {
         course_name: "",
@@ -48,6 +65,9 @@ export const TestForm = () =>{
       },
     });
 
+    useEffect(() => {
+      courseListHandler();
+    }, []);
     return (
       <div className="flex-1 w-full flex items-center justify-center mt-8">
         <div className="w-[350px] lg:w-[400px] shadow p-3">
@@ -89,10 +109,11 @@ export const TestForm = () =>{
               />
               <TextField
                 fullWidth
-                type="integer"
                 id="fk_course_id"
                 name="fk_course_id"
                 label="Course"
+                type="group"
+                select
                 value={formik.values.fk_course_id}
                 onChange={formik.handleChange}
                 error={
@@ -102,7 +123,11 @@ export const TestForm = () =>{
                 helperText={
                   formik.touched.fk_course_id && formik.errors.fk_course_id
                 }
-              />
+              >
+                {courseList.map((c) => (
+                  <MenuItem value={c.id}>{c.course_name}</MenuItem>
+                ))}
+              </TextField>
             </div>
             <div className="space-y-3">
               <div className="flex gap-2">

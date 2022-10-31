@@ -1,8 +1,13 @@
 import React from "react";
 import { Switch, styled } from "@mui/material";
 
-const IOSSwitch = styled(props => (
-  <Switch focusVisibleClassName=".Mui-focusVisible" disableRipple {...props} />
+const IOSSwitch = styled((props) => (
+  <Switch
+    onClick={() => console.log(props)}
+    focusVisibleClassName=".Mui-focusVisible"
+    disableRipple
+    {...props}
+  />
 ))(({ theme }) => ({
   width: 42,
   height: 26,
@@ -53,5 +58,5 @@ const IOSSwitch = styled(props => (
 }));
 
 export const ToggleButton = props => {
-  return <IOSSwitch {...props} />;
+  return <IOSSwitch {...props}  />;
 };
